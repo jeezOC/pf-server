@@ -8,8 +8,15 @@ const authenticate = async (req, res) => {
     const usuarioExiste = await Usuario.findOne({ usuario });
     if (usuarioExiste) {
         if (await usuarioExiste.valdiatePassword(contrasena)) {
+            const userLoged = {
+                nombre: {...usuarioExiste.nombre},
+                apellidos:{...usuarioExiste.apellidos},
+                usuario:{...usuarioExiste.usuario},
+                isAdmin:{...usuarioExiste.isAdmin},
+                isNewAccount:{...usuarioExiste.isNewAccount}
+            }
          
-            res.json({ token: generateJWT(usuarioExiste.id) })
+            res.status(200).json({ token: generateJWT(usuarioExiste.id), user:userLoged})
             // res.json({ msg: "USUARIO INGRESO SATISFACTORIAMENTE" });
         } else {
             res.status(400).json({ msg: "CONTRASENA INCORRECTA" });
@@ -27,7 +34,7 @@ const singin = async (req, res) => {
         try {
             const usuario = new Usuario(req.body);
             const usuarioGuardar = await usuario.save();
-            res.json({ msg: "USUARIO REGISTRADO SATISFACTORIAMENTE" });
+            res.status(200).json({ msg: "USUARIO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar});
         } catch (error) {
             console.log(error);
         }

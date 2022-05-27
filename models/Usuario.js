@@ -21,6 +21,15 @@ const usuarioSchema = mongoose.Schema({
     contrasena:{
         type: String,
         require: true
+    },
+    isAdmin:{
+        type: Boolean,
+        require: true
+
+    },
+    isNewAccount:{
+        type: Boolean,
+        require: true
     }
     // },
     // token:{
