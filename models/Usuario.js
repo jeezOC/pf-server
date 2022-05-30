@@ -25,7 +25,6 @@ const usuarioSchema = mongoose.Schema({
     isAdmin:{
         type: Boolean,
         require: true
-
     },
     isNewAccount:{
         type: Boolean,

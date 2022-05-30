@@ -4,6 +4,7 @@ import cors from "cors"
 
 import dbConnect from './config/db-connection.js';
 import usuarioRoutes from './routes/usuarioRoutes.js'
+import organizacionRoutes from './routes/organizacionRoutes.js'
 
 const app = express();
 const PORT = process.env.PORT || 4000 //cuando se pone en produccion utiliciza la que le asigne el host, localmente usa el puerto asignado
@@ -27,6 +28,7 @@ dbConnect();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/', usuarioRoutes);
+app.use('/org', organizacionRoutes);
 
 
 app.listen(PORT, () => {

@@ -42,6 +42,8 @@ const singin = async (req, res) => {
         res.status(400).json({ msg: "EL NOMBRE DE USUARIO YA EXISTE" });
     }
 };
+
+
 const app = (req, res) => {
     const { usuarioActual } = req;
     // console.log({usuario: usuarioActual});
