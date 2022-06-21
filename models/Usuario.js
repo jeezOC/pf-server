@@ -12,7 +12,7 @@ const usuarioSchema = mongoose.Schema({
         require: true,
         trim: true
     },
-    usuario:{
+    correo:{
         type: String,
         require: true,
         unique: true,
@@ -20,7 +20,8 @@ const usuarioSchema = mongoose.Schema({
     },
     contrasena:{
         type: String,
-        require: true
+        require: true,
+        trim: true
     },
     isAdmin:{
         type: Boolean,
