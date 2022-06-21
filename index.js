@@ -19,7 +19,6 @@ const corsOptions= {
         }else{
             callback(new Error('CORS not allow this request'), true)
         }
-
     }
 }
 

@@ -13,5 +13,5 @@ const organizacionsSchema = mongoose.Schema({
     },
 })
 
-const Organizacion = mongoose.model("Organizacions", organizacionsSchema);
+const Organizacion = mongoose.model("Organizacion", organizacionsSchema);
 export default Organizacion;
