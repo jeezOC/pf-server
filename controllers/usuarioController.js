@@ -6,7 +6,7 @@ const authenticate = async (req, res) => {
     const { usuario, contrasena } = req.body;
 
     const usuarioExiste = await Usuario.findOne({ usuario });
-    // console.log(usuarioExiste);
+    console.log(usuarioExiste);
     if (usuarioExiste) {
         if (await usuarioExiste.valdiatePassword(contrasena)) {
             const userLoged = {
@@ -17,7 +17,7 @@ const authenticate = async (req, res) => {
                 isAdmin:usuarioExiste.isAdmin,
                 isNewAccount:usuarioExiste.isNewAccount
             }
-            res.status(200).json({ token: generateJWT(usuarioExiste.id), user:userLoged, msg: "USUARIO INGRESO SATISFACTORIAMENTE" })
+            res.status(200).json({ token: generateJWT(usuarioExiste._id), user:userLoged, msg: "USUARIO INGRESO SATISFACTORIAMENTE" })
         } else {
             res.status(400).json({ msg: "CONTRASENA INCORRECTA" });
         }
