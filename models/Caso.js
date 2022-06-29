@@ -6,6 +6,10 @@ const casoSchema = mongoose.Schema({
         require: true,
         ref: "Tramite",
     },
+    codigo:{
+        type: String,
+        require: true
+    },
     fecha_creacion:{
         type: Date,
         require: true,

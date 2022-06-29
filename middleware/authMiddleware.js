@@ -13,7 +13,7 @@ const authValidate = async (req, res, next) => {
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
            
-            req.usuarioActual = await Usuario.findById(decoded.id).select("-contrasena");
+            req.usuarioActual = await Usuario.findById(decoded.id).select("contrasena");
             return next();
         } catch (error) {
 
