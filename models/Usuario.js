@@ -12,7 +12,7 @@ const usuarioSchema = mongoose.Schema({
         require: true,
         trim: true
     },
-    correo:{
+    usuario:{
         type: String,
         require: true,
         unique: true,
