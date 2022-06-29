@@ -3,17 +3,18 @@ import Usuario from '../models/Usuario.js'
 
 const authValidate = async (req, res, next) => {
     let token;
-    if (req.headers.authorizaton && 
-        req.headers.authorizaton.startsWith('Bearer')) {
+    if (req.headers.authorization && 
+        req.headers.authorization.startsWith('Bearer')) {
         // res.json({ msg: "token valido" });
         
         try {
-            token = req.headers.authorizaton.split(" ")[1];
+            token = req.headers.authorization.split(" ")[1];
             
 
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
            
-            req.usuarioActual = await Usuario.findById(decoded.id).select("contrasena");
+            req.usuarioActual = await Usuario.findById(decoded.id).select("-contrasena");
+            req.token = token
             return next();
         } catch (error) {
 

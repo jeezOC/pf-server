@@ -26,7 +26,6 @@ const authenticate = async (req, res) => {
     }
 };
 
-
 const singin = async (req, res) => {
     const { usuario } = req.body;
     const usuarioExiste = await Usuario.findOne({ "usuario": usuario });
@@ -44,11 +43,10 @@ const singin = async (req, res) => {
     }
 };
 
-
 const app = (req, res) => {
-    const { usuarioActual } = req;
+    const { usuarioActual, token } = req;
     // console.log({usuario: usuarioActual});
-    res.json(usuarioActual);
+    res.status(200).json({usuarioActual});
 };
 export { authenticate, singin, app };
 

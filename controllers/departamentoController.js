@@ -1,5 +1,5 @@
-import Departamento from '../models/Departamento';
-import Organizacion from '../models/Organizacion';
+import Departamento from '../models/Departamento.js';
+import Organizacion from '../models/Organizacion.js';
 import Usuario from '../models/Usuario.js'
 import mongoose from "mongoose"
 
@@ -22,4 +22,4 @@ const guardarDepartamento = async (req, res) => {
     }
 }
 
-export {guardarOrganizacion}
+export {guardarDepartamento}

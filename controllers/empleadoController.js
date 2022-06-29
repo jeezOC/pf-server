@@ -1,39 +1,42 @@
 import Usuario from '../models/Usuario.js'
 
 const guardarEmpleado = async (req, res) => {
-    const { empleado } = req.body;
-    const empleadoExiste = await Usuario.findOne({ "usuario": empleado });
-    if (!empleadoExiste) {
+    const { usuario } = req.body;
+    const usuarioExiste = await Usuario.findOne({ "usuario": usuario });
+    if (!usuarioExiste) {
         try {
-            const empleado = new Usuario(req.body);
-            empleado.isAdmin = false;
-            const empleadoGuardar = await empleado.save();
-            res.status(200).json({ msg: "EMPLEADO REGISTRADO SATISFACTORIAMENTE", newEmpleado: empleadoGuardar});
+            const usuario = new Usuario(req.body);
+            usuario.isAdmin = false;
+            usuario.isNewAccount = false;
+            const usuarioGuardar = await usuario.save();
+            res.status(200).json({ msg: "EMPLEADO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar});
         } catch (error) {
             console.log(error);
             res.status(400).json({ msg: error });
         }
     } else {
-        res.status(400).json({ msg: "DEBE USAR OTRO NOMBRE DE EMPLEADO" });
+        res.status(400).json({ msg: "EL NOMBRE DE EMPLEADO YA EXISTE" });
     }
 };
 
 const eliminarEmpleado = async (req, res) => {
-    const { empleado } = req.body;
-    const empleadoExiste = await Usuario.findOne({ "usuario": empleado });
-    if (!empleadoExiste) {
-        try {
-            const empleado = new Usuario(req.body);
-            empleado.isAdmin = false;
-            const empleadoGuardar = await empleado.save();
-            res.status(200).json({ msg: "EMPLEADO REGISTRADO SATISFACTORIAMENTE", newEmpleado: empleadoGuardar});
-        } catch (error) {
-            console.log(error);
-            res.status(400).json({ msg: error });
-        }
-    } else {
-        res.status(400).json({ msg: "DEBE USAR OTRO NOMBRE DE EMPLEADO" });
+    try {
+        await Usuario.deleteOne(req.body.usuario)
+        res.status(200).json({ msg: "EMPLEADO ELIMINADO CORRECTAMENTE"});
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({ msg: "EL EMPLEADO NO SE ELIMINO CORRECTAMENTE"});
     }
-};
+}
 
-export {guardarEmpleado, eliminarEmpleado}
+const consultarEmpleados = async (req, res) => {
+    try {
+        const usuarios = await Usuario.find();
+        res.status(200).json({ msg: "BUSQUEDA CORRECTAMENTE", usuarios: usuarios});
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({ msg: "BUSQUEDA NO HECHA"});
+    }
+}
+
+export {guardarEmpleado, eliminarEmpleado, consultarEmpleados}

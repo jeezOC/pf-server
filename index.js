@@ -8,7 +8,7 @@ import organizacionRoutes from './routes/organizacionRoutes.js'
 import gerenciaRoutes from './routes/gerenciaRoutes.js'
 import empleadosRoutes from './routes/empleadosRoutes.js'
 import casoRoutes from './routes/casoRoutes.js'
-import departamentoRoutes from './routes/departamentoRoutes'
+import departamentoRoutes from './routes/departamentoRoutes.js'
 
 const app = express();
 const PORT = process.env.PORT || 4000 //cuando se pone en produccion utiliciza la que le asigne el host, localmente usa el puerto asignado
