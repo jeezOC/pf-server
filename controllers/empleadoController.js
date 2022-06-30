@@ -29,6 +29,17 @@ const eliminarEmpleado = async (req, res) => {
     }
 }
 
+const actualizarEmpleado = async (req, res) => {
+    try {
+        const user = req.Usuario
+        const usuario = await Usuario.updateOne({usuario: user})
+        res.status(200).json({ msg: "EMPLEADO ACTUALIZADO CORRECTAMENTE"});
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({ msg: "EL EMPLEADO NO SE ACTUALIZO CORRECTAMENTE"});
+    }
+}
+
 const consultarEmpleados = async (req, res) => {
     try {
         const usuarios = await Usuario.find();
@@ -39,4 +50,4 @@ const consultarEmpleados = async (req, res) => {
     }
 }
 
-export {guardarEmpleado, eliminarEmpleado, consultarEmpleados}
+export {guardarEmpleado, eliminarEmpleado, consultarEmpleados, actualizarEmpleado}

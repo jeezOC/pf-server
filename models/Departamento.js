@@ -32,7 +32,19 @@ const departamentosSchema = mongoose.Schema({
             require: true,
             trim: true,
         },
-    }]
+    }],
+    empleados:[{
+        usuario:{
+            type: String,
+            require: true,
+            ref: "Usuario",
+        }
+    }],
+    gerencia:{
+        type: mongoose.Schema.Types.ObjectId,
+        require: true,
+        ref: "Gerencia" 
+    }
 })
 
 const Departamento = mongoose.model("Departamentos", departamentosSchema);
