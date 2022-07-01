@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 const departamentosSchema = mongoose.Schema({
     jefe_dept:{
         type: mongoose.Schema.Types.ObjectId,
-        require: true,
+        require: false,
         ref: "Usuario",
     },
     organizacion:{
@@ -24,7 +24,7 @@ const departamentosSchema = mongoose.Schema({
         },
         tel_secundario:{
             type: String,
-            require: true,
+            require: false,
             trim: true,
         },
         email:{
@@ -36,7 +36,7 @@ const departamentosSchema = mongoose.Schema({
     empleados:[{
         usuario:{
             type: String,
-            require: true,
+            require: false,
             ref: "Usuario",
         }
     }],
