@@ -16,10 +16,23 @@ const guardarGerencia = async (req, res) => {
     }
 }
 
+const actualizarGerencia = async (req, res) => {
+    try {
+        const { _id, nombre} = req.body
+        const gerUpdated = await Gerencia.findByIdAndUpdate({'_id': _id},{'nombre':nombre})
+        gerUpdated.save();
+        res.status(200).json({ msg: "GERENCIA CREADA CORRECTAMENTE", gerUpdated:gerUpdated});
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({ msg: "GERENCIA NO SE CREO CORRECTAMENTE"});
+    }
+}
+
+
 const eliminarGerencia = async (req, res) => {
     try {
 
-        await Gerencia.deleteOne({'_id': new mongodb.ObjectID(req.body._id)})
+        await Gerencia.deleteOne({'_id': req.body._id})
         res.status(200).json({ msg: "GERENCIA ELIMINADA CORRECTAMENTE"});
     } catch (e) {
         console.log(e)
@@ -29,8 +42,10 @@ const eliminarGerencia = async (req, res) => {
 
 const consultarGerencias = async (req, res) => {
     try {
-        const { org } = req.body;
-        const gerencias = await Gerencia.findAll({'org': org});
+        const  {orgID} = req.body;
+        console.log(req.body);
+        const gerencias = await Gerencia.find({'organizacion':  orgID});
+        console.log(gerencias)
         res.status(200).json({ msg: "GERENCIA ELIMINADA CORRECTAMENTE", gerencias: gerencias});
     } catch (e) {
         console.log(e)
@@ -38,4 +53,4 @@ const consultarGerencias = async (req, res) => {
     }
 }
 
-export {guardarGerencia, eliminarGerencia, consultarGerencias}
+export {guardarGerencia, eliminarGerencia, consultarGerencias, actualizarGerencia}

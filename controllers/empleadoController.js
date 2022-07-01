@@ -7,7 +7,7 @@ const guardarEmpleado = async (req, res) => {
         try {
             const usuario = new Usuario(req.body);
             usuario.isAdmin = false;
-            usuario.isNewAccount = false;
+            usuario.isNewAccount = true;
             const usuarioGuardar = await usuario.save();
             res.status(200).json({ msg: "EMPLEADO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar});
         } catch (error) {

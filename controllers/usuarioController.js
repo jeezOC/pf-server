@@ -1,5 +1,7 @@
 import Usuario from '../models/Usuario.js'
+import Organizacion from '../models/Organizacion.js'
 import generateJWT from '../helpers/jwt.js'
+import mongoose from "mongoose"
 
 const authenticate = async (req, res) => {
 
@@ -10,14 +12,23 @@ const authenticate = async (req, res) => {
     if (usuarioExiste) {
         if (await usuarioExiste.valdiatePassword(contrasena)) {
             const userLoged = {
-                _id:usuarioExiste._id,
-                nombre:usuarioExiste.nombre,
-                apellidos:usuarioExiste.apellidos,
-                usuario:usuarioExiste.usuario,
-                isAdmin:usuarioExiste.isAdmin,
-                isNewAccount:usuarioExiste.isNewAccount
+                _id: usuarioExiste._id,
+                nombre: usuarioExiste.nombre,
+                apellidos: usuarioExiste.apellidos,
+                usuario: usuarioExiste.usuario,
+                isAdmin: usuarioExiste.isAdmin,
+                isNewAccount: usuarioExiste.isNewAccount
             }
-            res.status(200).json({ token: generateJWT(usuarioExiste._id), user:userLoged, msg: "USUARIO INGRESO SATISFACTORIAMENTE" })
+            if (!userLoged.isNewAccount) {
+                if (userLoged.isAdmin) {
+                    const organizacion = await Organizacion.findOne({ 'dueno':userLoged._id });
+                    res.status(200).json({ token: generateJWT(usuarioExiste._id), user: userLoged, msg: "USUARIO INGRESO SATISFACTORIAMENTE", org: organizacion })
+                } else {
+                    res.status(200).json({ token: generateJWT(usuarioExiste._id), user: userLoged, msg: "USUARIO INGRESO SATISFACTORIAMENTE" })
+                }
+            } else {
+                res.status(200).json({ token: generateJWT(usuarioExiste._id), user: userLoged, msg: "USUARIO INGRESO SATISFACTORIAMENTE" })
+            }
         } else {
             res.status(400).json({ msg: "CONTRASENA INCORRECTA" });
         }
@@ -33,7 +44,7 @@ const singin = async (req, res) => {
         try {
             const usuario = new Usuario(req.body);
             const usuarioGuardar = await usuario.save();
-            res.status(200).json({ msg: "USUARIO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar});
+            res.status(200).json({ msg: "USUARIO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar });
         } catch (error) {
             console.log(error);
             res.status(400).json({ msg: error });
@@ -46,7 +57,7 @@ const singin = async (req, res) => {
 const app = (req, res) => {
     const { usuarioActual, token } = req;
     // console.log({usuario: usuarioActual});
-    res.status(200).json({usuarioActual});
+    res.status(200).json({ usuarioActual });
 };
 export { authenticate, singin, app };
 
