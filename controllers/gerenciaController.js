@@ -6,7 +6,7 @@ const guardarGerencia = async (req, res) => {
         const { gerencia, org } = req.body
         const nuevaGer = new Gerencia({
             nombre: gerencia,
-            organizacion: org
+            organizacion: org._id
         })
         const gerGuardada = await nuevaGer.save();
         res.status(200).json({ msg: "GERENCIA CREADA CORRECTAMENTE", orgCreada:gerGuardada});
@@ -19,7 +19,7 @@ const guardarGerencia = async (req, res) => {
 const eliminarGerencia = async (req, res) => {
     try {
 
-        await Gerencia.deleteOne({id: new mongodb.ObjectID(req.body._id)})
+        await Gerencia.deleteOne({'_id': new mongodb.ObjectID(req.body._id)})
         res.status(200).json({ msg: "GERENCIA ELIMINADA CORRECTAMENTE"});
     } catch (e) {
         console.log(e)
@@ -29,7 +29,8 @@ const eliminarGerencia = async (req, res) => {
 
 const consultarGerencias = async (req, res) => {
     try {
-        const gerencias = await Gerencia.find();
+        const { org } = req.body;
+        const gerencias = await Gerencia.findAll({'org': org});
         res.status(200).json({ msg: "GERENCIA ELIMINADA CORRECTAMENTE", gerencias: gerencias});
     } catch (e) {
         console.log(e)

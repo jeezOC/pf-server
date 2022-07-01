@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.post("/save", guardarGerencia );
 router.post("/delete", eliminarGerencia );
-router.post("/get", consultarGerencias );
+router.post("/getByOrg", consultarGerencias );
 
 export default router;
