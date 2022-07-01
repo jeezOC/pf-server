@@ -12,9 +12,8 @@ const guardarOrganizacion = async (req, res) => {
             dueno: mongoose.Types.ObjectId(usuarioExiste._id),
         })
         const orgGuardada = await nuevaOrg.save();
-        usuarioExiste.isNewAccount = false;
         await Usuario.findByIdAndUpdate({"_id": _id},{"isNewAccount": false})
-        res.status(200).json({ msg: "SU ORGANIZACION SE CREO CORRECTAMENTE", orgCreada:nuevaOrg});
+        res.status(200).json({ msg: "SU ORGANIZACION SE CREO CORRECTAMENTE", orgCreada:orgGuardada});
     } catch (e) {
         console.log(e)
         res.status(400).json({ msg: "SU ORGANIZACION  NO SE CREO CORRECTAMENTE"});

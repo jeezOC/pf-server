@@ -51,7 +51,7 @@ const singin = async (req, res) => {
             const usuarioGuardar = await usuario.save();
             res.status(200).json({ msg: "USUARIO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar });
         } catch (error) {
-            console.log(error);1
+            console.log(error);
             res.status(400).json({ msg: error });
         }
     } else {

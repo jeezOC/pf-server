@@ -42,7 +42,7 @@ const eliminarGerencia = async (req, res) => {
 
 const consultarGerencias = async (req, res) => {
     try {
-        const  {orgID} = req.body;
+        const  {orgID} = req.params;
         console.log(req.body);
         const gerencias = await Gerencia.find({'organizacion':  orgID});
         console.log(gerencias)
