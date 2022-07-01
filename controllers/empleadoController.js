@@ -1,5 +1,6 @@
 import Usuario from '../models/Usuario.js'
 
+
 const guardarEmpleado = async (req, res) => {
     const { usuario } = req.body;
     const usuarioExiste = await Usuario.findOne({ "usuario": usuario });
@@ -50,4 +51,4 @@ const consultarEmpleados = async (req, res) => {
     }
 }
 
-export {guardarEmpleado, eliminarEmpleado, consultarEmpleados, actualizarEmpleado}
+export {eliminarEmpleado, consultarEmpleados, actualizarEmpleado}
