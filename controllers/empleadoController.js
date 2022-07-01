@@ -1,24 +1,5 @@
 import Usuario from '../models/Usuario.js'
 
-const guardarEmpleado = async (req, res) => {
-    const { usuario } = req.body;
-    const usuarioExiste = await Usuario.findOne({ "usuario": usuario });
-    if (!usuarioExiste) {
-        try {
-            const usuario = new Usuario(req.body);
-            usuario.isAdmin = false;
-            usuario.isNewAccount = false;
-            const usuarioGuardar = await usuario.save();
-            res.status(200).json({ msg: "EMPLEADO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar});
-        } catch (error) {
-            console.log(error);
-            res.status(400).json({ msg: error });
-        }
-    } else {
-        res.status(400).json({ msg: "EL NOMBRE DE EMPLEADO YA EXISTE" });
-    }
-};
-
 const eliminarEmpleado = async (req, res) => {
     try {
         await Usuario.deleteOne(req.body.usuario)
@@ -50,4 +31,4 @@ const consultarEmpleados = async (req, res) => {
     }
 }
 
-export {guardarEmpleado, eliminarEmpleado, consultarEmpleados, actualizarEmpleado}
+export {eliminarEmpleado, consultarEmpleados, actualizarEmpleado}

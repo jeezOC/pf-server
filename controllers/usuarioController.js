@@ -1,5 +1,6 @@
 import Usuario from '../models/Usuario.js'
 import generateJWT from '../helpers/jwt.js'
+import Departamento from '../models/Departamento.js';
 
 const authenticate = async (req, res) => {
 
@@ -32,14 +33,42 @@ const singin = async (req, res) => {
     if (!usuarioExiste) {
         try {
             const usuario = new Usuario(req.body);
+
             const usuarioGuardar = await usuario.save();
+
             res.status(200).json({ msg: "USUARIO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardar});
+        } catch (error) {
+            console.log(error);1
+            res.status(400).json({ msg: error });
+        }
+    } else {
+        res.status(400).json({ msg: "EL NOMBRE DE USUARIO YA EXISTE" });
+    }
+};
+
+const registrarEmpleado = async (req, res) => {
+    const { usuario } = req.body;
+    const usuarioExiste = await Usuario.findOne({ "usuario": usuario });
+    if (!usuarioExiste) {
+        try {
+            const usuario = new Usuario(req.body);
+
+            const usuarioGuardado = await usuario.save();
+            
+            const { departamento } = req.body;
+            const depExiste = await Departamento.findOne({ "nombre": departamento});
+
+            if (depExiste) {
+                const dep = await Departamento.findByIdAndUpdate({'_id': depExiste.id},{empleados:[...depExiste.empleados,usuarioGuardado]})
+            }
+
+            res.status(200).json({ msg: "EMPLEADO REGISTRADO SATISFACTORIAMENTE", newUser: usuarioGuardado});
         } catch (error) {
             console.log(error);
             res.status(400).json({ msg: error });
         }
     } else {
-        res.status(400).json({ msg: "EL NOMBRE DE USUARIO YA EXISTE" });
+        res.status(400).json({ msg: "EL NOMBRE DE EMPLEADO YA EXISTE" });
     }
 };
 
@@ -48,5 +77,5 @@ const app = (req, res) => {
     // console.log({usuario: usuarioActual});
     res.status(200).json({usuarioActual});
 };
-export { authenticate, singin, app };
+export { authenticate, singin, app, registrarEmpleado };
 

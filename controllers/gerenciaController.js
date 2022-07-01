@@ -18,7 +18,6 @@ const guardarGerencia = async (req, res) => {
 
 const eliminarGerencia = async (req, res) => {
     try {
-
         await Gerencia.deleteOne({'_id': new mongodb.ObjectID(req.body._id)})
         res.status(200).json({ msg: "GERENCIA ELIMINADA CORRECTAMENTE"});
     } catch (e) {
