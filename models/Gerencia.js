@@ -5,6 +5,11 @@ const gerenciaSchema = mongoose.Schema({
         type: String,
         require: true,
         trim: true,
+    },
+    organizacion:{
+        type: mongoose.Schema.Types.ObjectId,
+        require: true,
+        ref: "Organizacion",
     }
 })
 
