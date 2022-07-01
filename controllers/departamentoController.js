@@ -5,17 +5,26 @@ import mongoose from "mongoose"
 
 const guardarDepartamento = async (req, res) => {
     try {
-        const { _id, idOrg, nombre, telP, telS, email } = req.body;
-        const usuarioExiste = await Usuario.findOne({ "_id": _id });
-        const orgExiste = await Organizacion.findOne({ "_id": idOrg });
+        const { 
+            nombre,
+			contacto,
+			gerencia,
+			organizacion 
+        } = req.body;
+        const {tel_principal, tel_secundariod, email} = contacto
+
+        // const usuarioExiste = await Usuario.findOne({ "_id": _id });
+        const orgExiste = await Organizacion.findOne({ "_id": organizacion._id });
         const nuevoDept = new Departamento({
-            jefe_dept: mongoose.Types.ObjectId(usuarioExiste._id),
-            organizacion: mongoose.Types.ObjectId(orgExiste._id),
             nombre: nombre,
-            contacto: mongoose.Types.Array(telP, telS, email),
-        })
-        const deptGuardada = await nuevoDept.save();
-        res.status(200).json({ msg: "DEPARTAMENTO CREADO CORRECTAMENTE", deptCreado:nuevoDept});
+            // jefe_dept: mongoose.Types.ObjectId(usuarioExiste._id),
+            organizacion: mongoose.Types.ObjectId(orgExiste._id),
+            contacto: mongoose.Types.Array([tel_principal, tel_secundariod, email]),
+            gerencia: mongoose.Types.ObjectId(gerencia._id),
+        }
+        )
+        const deptCreado = await nuevoDept.save();
+        res.status(200).json({ msg: "DEPARTAMENTO CREADO CORRECTAMENTE", deptCreado:deptCreado, gerencia:gerencia});
     } catch (e) {
         console.log(e)
         res.status(400).json({ msg: "EL DEPARTAMENTO NO SE CREO CORRECTAMENTE"});
