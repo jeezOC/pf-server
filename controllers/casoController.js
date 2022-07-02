@@ -18,4 +18,15 @@ const abiertosPorCodigo = async (req, res) => {
     res.status(200).json({ msg: "CASOS ENCONTRADOS", caso: caso});
 };
 
-export {abiertosPorTramite, abiertosPorCodigo}
+const casosPorDepartamento = async (req, res) => {
+    const casos = await caso_x_Depa.find();
+    res.status(200).json({ casos });
+}
+
+const buscarCaso = async (req, res) => {
+    const { _id } = req.body;
+    const caso = await Caso.findById({'_id': _id});
+    res.status(200).json({caso:caso});
+}
+
+export {abiertosPorTramite, abiertosPorCodigo, casosPorDepartamento, buscarCaso}

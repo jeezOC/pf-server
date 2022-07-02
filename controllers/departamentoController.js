@@ -32,6 +32,7 @@ const guardarDepartamento = async (req, res) => {
     }
 }
 
+
 const getDepartamentos = async (req, res) => {
     const { orgID } = req.params;
     const departamentos = await Departamento.find({'organizacion':  orgID});
@@ -39,4 +40,11 @@ const getDepartamentos = async (req, res) => {
 
 }
 
-export { guardarDepartamento, getDepartamentos }
+const buscarDep = async (req, res) => {
+    const { id } = req.params;
+    const dep = await Departamento.findById({'_id': id});
+    res.status(200).json({dep:dep});
+}
+
+export {guardarDepartamento, buscarDep, getDepartamentos}
+
