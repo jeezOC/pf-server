@@ -43,14 +43,15 @@ const eliminarGerencia = async (req, res) => {
 const consultarGerencias = async (req, res) => {
     try {
         const  {orgID} = req.params;
-        console.log(req.body);
+        // console.log(req.body);
         const gerencias = await Gerencia.find({'organizacion':  orgID});
-        console.log(gerencias)
+        // console.log(gerencias)
         res.status(200).json({ msg: "GERENCIA ELIMINADA CORRECTAMENTE", gerencias: gerencias});
     } catch (e) {
         console.log(e)
         res.status(400).json({ msg: "SU GERENCIA NO SE ELIMINO CORRECTAMENTE"});
     }
 }
+
 
 export {guardarGerencia, eliminarGerencia, consultarGerencias, actualizarGerencia}

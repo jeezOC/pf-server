@@ -1,17 +1,18 @@
 import Departamento from '../models/Departamento.js';
 import Organizacion from '../models/Organizacion.js';
+import Gerencia from '../models/Gerencia.js';
 import Usuario from '../models/Usuario.js'
 import mongoose from "mongoose"
 
 const guardarDepartamento = async (req, res) => {
     try {
-        const { 
+        const {
             nombre,
-			contacto,
-			gerencia,
-			organizacion 
+            contacto,
+            gerencia,
+            organizacion
         } = req.body;
-        const {tel_principal, tel_secundariod, email} = contacto
+        const { tel_principal, tel_secundariod, email } = contacto
 
         // const usuarioExiste = await Usuario.findOne({ "_id": _id });
         const orgExiste = await Organizacion.findOne({ "_id": organizacion._id });
@@ -24,11 +25,19 @@ const guardarDepartamento = async (req, res) => {
         }
         )
         const deptCreado = await nuevoDept.save();
-        res.status(200).json({ msg: "DEPARTAMENTO CREADO CORRECTAMENTE", deptCreado:deptCreado, gerencia:gerencia});
+        res.status(200).json({ msg: "DEPARTAMENTO CREADO CORRECTAMENTE", deptCreado: deptCreado, gerencia: gerencia });
     } catch (e) {
         console.log(e)
-        res.status(400).json({ msg: "EL DEPARTAMENTO NO SE CREO CORRECTAMENTE"});
+        res.status(400).json({ msg: "EL DEPARTAMENTO NO SE CREO CORRECTAMENTE" });
     }
+}
+
+
+const getDepartamentos = async (req, res) => {
+    const { orgID } = req.params;
+    const departamentos = await Departamento.find({'organizacion':  orgID});
+    res.status(200).json({ msg: "Departamentos consultados correctamente", departamentos: departamentos });
+
 }
 
 const buscarDep = async (req, res) => {
@@ -37,4 +46,5 @@ const buscarDep = async (req, res) => {
     res.status(200).json({dep:dep});
 }
 
-export {guardarDepartamento, buscarDep}
+export {guardarDepartamento, buscarDep, getDepartamentos}
+
