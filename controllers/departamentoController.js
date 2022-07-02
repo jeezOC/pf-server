@@ -31,4 +31,10 @@ const guardarDepartamento = async (req, res) => {
     }
 }
 
-export {guardarDepartamento}
+const buscarDep = async (req, res) => {
+    const { id } = req.params;
+    const dep = await Departamento.findById({'_id': id});
+    res.status(200).json({dep:dep});
+}
+
+export {guardarDepartamento, buscarDep}
