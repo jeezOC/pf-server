@@ -25,6 +25,7 @@ const authenticate = async (req, res) => {
             }
             if (!userLoged.isNewAccount) {
                 if (userLoged.isAdmin) {
+                    
                     const organizacion = await Organizacion.findOne({ 'dueno':userLoged._id });
                     res.status(200).json({ token: generateJWT(usuarioExiste._id), user: userLoged, msg: "USUARIO INGRESO SATISFACTORIAMENTE", org: organizacion })
                 } else {
